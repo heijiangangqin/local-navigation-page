@@ -73,7 +73,16 @@ function updateTime() {
     
     // 农历信息（简化版）
     const lunarInfo = getLunarInfo(now);
-    currentDateEl.textContent = `${dateString} ${lunarInfo}`;
+    
+    // 计算倒计时
+    const countdownText = getCountdownText(now);
+    
+    // 如果有倒计时，则显示在日期后面
+    if (countdownText) {
+        currentDateEl.textContent = `${dateString} ${lunarInfo} ${countdownText}`;
+    } else {
+        currentDateEl.textContent = `${dateString} ${lunarInfo}`;
+    }
     
     // 更新当前日期数字
     // dayNumberEl.textContent = now.getDate(); // 删除
@@ -91,6 +100,32 @@ function getLunarInfo(date) {
     const day = date.getDate();
     
     return `${lunarMonths[month - 1]}月${lunarDays[day - 1] || '初一'} 丁未`;
+}
+
+// 计算倒计时文本
+function getCountdownText(now) {
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeInMinutes = currentHour * 60 + currentMinute;
+    
+    // 12:00 对应 12 * 60 = 720 分钟
+    // 13:30 对应 13 * 60 + 30 = 810 分钟
+    // 18:00 对应 18 * 60 = 1080 分钟
+    
+    if (currentTimeInMinutes < 720) {
+        // 12点之前，倒计时到12:00
+        const minutesToNoon = 720 - currentTimeInMinutes;
+        return `${minutesToNoon}分钟`;
+    } else if (currentTimeInMinutes >= 810) {
+        // 13:30之后，倒计时到18:00
+        const minutesToEvening = 1080 - currentTimeInMinutes;
+        if (minutesToEvening > 0) {
+            return `${minutesToEvening}分钟`;
+        }
+    }
+    
+    // 其他时间不显示倒计时
+    return '';
 }
 
 // 天气配置管理
