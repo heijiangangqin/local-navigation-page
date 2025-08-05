@@ -176,6 +176,12 @@ function displayWeather(weather, config) {
     const windPower = weather.windpower;
     const reportTime = new Date(weather.reporttime);
     
+    // 根据天气状况设置动态背景颜色
+    const weatherWidget = document.querySelector('.weather-widget');
+    if (weatherWidget) {
+        weatherWidget.style.background = getWeatherBackground(weather.weather);
+    }
+    
     weatherContentEl.innerHTML = `
         <div class="weather-main">
             <div class="weather-location">${config.cityName}</div>
@@ -232,6 +238,28 @@ function getWeatherIcon(weather) {
     };
     
     return weatherMap[weather] || '🌤️';
+}
+
+// 根据天气状况获取背景颜色
+function getWeatherBackground(weather) {
+    const weatherBackgrounds = {
+        '晴': 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
+        '多云': 'linear-gradient(135deg, #a8e6cf 0%, #7fcdcd 100%)',
+        '阴': 'linear-gradient(135deg, #b2bec3 0%, #636e72 100%)',
+        '小雨': 'linear-gradient(135deg, #dcdde1 0%, #a4b0be 100%)',
+        '中雨': 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)',
+        '大雨': 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)',
+        '暴雨': 'linear-gradient(135deg, #2d3436 0%, #1e272e 100%)',
+        '雷阵雨': 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)',
+        '小雪': 'linear-gradient(135deg, #f1f2f6 0%, #dfe4ea 100%)',
+        '中雪': 'linear-gradient(135deg, #dfe4ea 0%, #ced6e0 100%)',
+        '大雪': 'linear-gradient(135deg, #ced6e0 0%, #a4b0be 100%)',
+        '雾': 'linear-gradient(135deg, #dcdde1 0%, #b2bec3 100%)',
+        '霾': 'linear-gradient(135deg, #b2bec3 0%, #95a5a6 100%)',
+        '沙尘暴': 'linear-gradient(135deg, #d63031 0%, #b71540 100%)'
+    };
+    
+    return weatherBackgrounds[weather] || 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)';
 }
 
 // 卡片管理功能
