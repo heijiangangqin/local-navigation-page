@@ -45,6 +45,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // 初始化编辑模式功能
     initializeEditMode();
+    
+    // 自动聚焦到搜索框
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.focus();
+    }
 });
 
 // 时间相关功能

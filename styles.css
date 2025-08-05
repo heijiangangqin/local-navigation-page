@@ -206,7 +206,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 20px;
+    padding: 30px;
 }
 
 .weather-main {
@@ -285,14 +285,15 @@ body {
 
 #notepad-content {
     width: 100%;
-    height: 150px;
+    height: 250px;
     border: none;
     outline: none;
     background: transparent;
-    resize: none;
+    resize: vertical;
     font-family: inherit;
     font-size: 0.9rem;
     line-height: 1.5;
+    padding: 10px;
 }
 
 /* 待办事项小部件 */
